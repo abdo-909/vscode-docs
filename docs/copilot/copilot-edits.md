@@ -1,4 +1,37 @@
----
+-import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+# Define a finely detailed heart shape using parametric equations
+t = np.linspace(0, 2 * np.pi, 1000)
+x = 16 * np.sin(t)**3
+y = 13 * np.cos(t) - 5 * np.cos(2 * t) - 2 * np.cos(3 * t) - np.cos(4 * t)
+
+# Create the figure and axis
+fig, ax = plt.subplots(figsize=(8, 8))
+ax.set_xlim(-20, 20)
+ax.set_ylim(-20, 20)
+ax.axis('off')
+ax.set_title('Heart Shape', fontsize=16, color='darkred')
+
+# Line object for the heart line
+heart_line, = ax.plot([], [], color='red', lw=2)
+
+# Initialize the plot
+def init():
+    heart_line.set_data([], [])
+    return heart_line,
+
+# Update function for the animation
+def update(frame):
+    heart_line.set_data(x[:frame], y[:frame])
+    return heart_line,
+
+# Create the animation
+ani = animation.FuncAnimation(fig, update, frames=len(t), init_func=init, interval=10, blit=True)
+
+# Display the animation
+plt.show()--
 Order: 8
 Area: copilot
 TOCTitle: Copilot Edits
